@@ -90,7 +90,7 @@ fn main() {
 }
 ```
 
-Output: 
+Output (will be slightly different every time): 
 ```
 Person one eats
 Person two eats
@@ -113,4 +113,6 @@ Person one eats
 
 The issue with the output is that there is no order to which Philosopher will get to eat first, nor any guarantee that a Philosopher will get to once before the others have eaten twice. 
 Correct the `DiningPeople` implementation to guarantee the same order of philosophers eating every time, and guarantee no philosopher will get to eat twice before another has eaten once.
+
+- Note: You are not allowed to change the code inside `main()` for how the `DiningPeople` struct is referenced, only change code inside `DiningPeople` impl/struct. 
 
