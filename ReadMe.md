@@ -56,7 +56,7 @@ fn eat() {
 ```
 
 Then there is some code using this struct and implementation representing the Philosophers eating together. 
- - Rust Note: We have to use closures (for spawning threads) and `Arc` to allow multiple non-mutable references to a heap allocation, both of these are because of how Rust handles ownership and concurrency.
+ - Rust Specific Note: We have to use closures (for spawning threads) and `Arc` to allow multiple non-mutable references to a heap allocation, both of these are because of how Rust handles ownership and concurrency.
 
 ```rust
 fn main() {
@@ -130,7 +130,7 @@ Correct the `DiningPhilosophers` implementation to guarantee the same order of p
 # Solution
 
 In order to protect the threads and establish some sort of order give the `DiningPhilosophers` struct three new properties of type `Arc<Mutex<bool>, Condvar>`. Each of these properties represents a shared memory `Mutex` that can hold the boolean value specifying if a given philosopher can eat, as well as a Condvar to notify threads when the `Mutex` value has changed.
-- note: I made all of the new properties private by making only `num_bites` public, so none of these new values are public facing outside of the implementation.
+- Note: I made all of the new properties private by making only `num_bites` public, so none of these new values are public facing outside of the implementation.
 
 ```rust
 // 3 people sit down to eat form the same plate, make sure that they all get to eat in turn
