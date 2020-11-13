@@ -2,6 +2,8 @@
 
 This problem describes a situation where 3 threads are running in a program and executing some functions, those threads do not have any order or sequence to how they are running and there needs to be a way to enforce order and guarantee that they will always run in that order. There also needs to be a way to make sure that when the threads run in order they don't ever run more than once before the next thread in the sequence gets to run.
 
+The Twist to the problem is that normally in concurrency problems you protect resources that are shared between threads, not protect the threads themselves from running in a given order.
+
 ## Problem Implementation
 
 3 Philosophers sit down at a table to share a single order of food, represented by this struct with a single property that represents number of bites each person in the group will eat.
