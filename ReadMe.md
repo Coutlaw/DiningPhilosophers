@@ -216,3 +216,7 @@ pub fn philosopher_one_eats(&self) {
 this will guarantee that all the philosophers take bites in order, and that none will get to eat until the other has eaten.
 
 - Notes: this solution would have the potential for deadlock if we tweaked the problem, if a philosopher wanted to take a different number of bites then it would break our current cycle with this implementation. To address that we would need to add some kind of queue mechanism to it.
+
+# Run my solution
+You will need to install rust and cargo.
+Clone this repo, and at the root of this project type `cargo run` to build and execute this project.
