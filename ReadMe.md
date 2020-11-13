@@ -1,6 +1,10 @@
 # Dining Philosophers (with a twist)
 
-There is a situation where 3 Philosophers sit down at a table to share a single order of fries, represented by this struct with a single property that represents number of fries each person in the group will eat.
+This problem describes a situation where 3 threads are running in a program and executing some functions, those threads do not have any order or sequence to how they are running and there needs to be a way to enforce order and guarantee that they will always run in that order. There also needs to be a way to make sure that when the threads run in order they don't ever run more than once before the next thread in the sequence gets to run.
+
+## Problem Implementation
+
+3 Philosophers sit down at a table to share a single order of food, represented by this struct with a single property that represents number of bites each person in the group will eat.
 
 ```rust
 struct DiningPhilosophers { 
@@ -42,7 +46,8 @@ impl DiningPhilosophers {
 }
 ```
 
-The `eat()` function is just a function to represent some delay for whomever is eating to eat their fry.
+The `eat()` function is just a function to represent some delay for whomever is eating.
+
 ```rust
 fn eat() {
     let ten_millis = time::Duration::from_millis(10);
@@ -96,7 +101,7 @@ fn main() {
 }
 ```
 
-Output (will be slightly different every time): 
+Output will be slightly different every time since no order is enforced: 
 ```
 Person one eats
 Person two eats
@@ -124,7 +129,7 @@ Correct the `DiningPhilosophers` implementation to guarantee the same order of p
 
 # Solution
 
-In order to protect the threads and establish some sort of order I gave the DiningPhilosophers struct three new properties of type `Arc<Mutex<bool>, Condvar>`. Each of these properties represents a shared memory `Mutex` that can hold the boolean value specifying if a given philosopher can eat, as well as a Condvar to notify threads when the `Mutex` value has changed.
+In order to protect the threads and establish some sort of order give the `DiningPhilosophers` struct three new properties of type `Arc<Mutex<bool>, Condvar>`. Each of these properties represents a shared memory `Mutex` that can hold the boolean value specifying if a given philosopher can eat, as well as a Condvar to notify threads when the `Mutex` value has changed.
 
 ```rust
 // 3 people sit down to eat form the same plate, make sure that they all get to eat in turn
@@ -154,7 +159,27 @@ pub fn new(bites: i32) -> DiningPhilosophers {
 
 Then update every philosophers eating function implementation. We will create a cycle of philosopher 1 eating, then philosopher 2 eating once philosopher 1 is done, then philosopher 3 eating once philosopher 2 is done, then back to philosopher 1. 
 
-Here is the code for one philosopher in the sequence, each of them are the same but the locks the acquire and update change based on what position of the cycle they are in.
+The cycle should look like this
+```
+Person one eats
+Person two eats
+Person three eats
+Person one eats
+Person two eats
+Person three eats
+Person one eats
+Person two eats
+Person three eats
+Person one eats
+Person two eats
+Person three eats
+Person one eats
+Person two eats
+Person three eats
+```
+
+
+Update the code for each philosopher in the sequence, each of them are the same but the locks they acquire and update change based on what position of the cycle they are in.
 
 ```rust
 pub fn philosopher_one_eats(&self) {
@@ -189,4 +214,4 @@ pub fn philosopher_one_eats(&self) {
 
 this will guarantee that all the philosophers take bites in order, and that none will get to eat until the other has eaten.
 
-- Notes: this solution would have the potential for deadlock if we changed the problem a tad, if a philosopher wanted to take a different number of bites then it would break our current cycle with this implementation. To address that we would need to add some kind of queue mechanism to it.
+- Notes: this solution would have the potential for deadlock if we tweaked the problem, if a philosopher wanted to take a different number of bites then it would break our current cycle with this implementation. To address that we would need to add some kind of queue mechanism to it.
