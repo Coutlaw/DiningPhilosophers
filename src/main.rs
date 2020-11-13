@@ -4,7 +4,7 @@ use std::{thread, time};
 // 3 people sit down to eat form the same plate, make sure that they all get to eat in turn
 struct DiningPhilosophers {
     // declare the number of bites each philosopher will take
-    num_bites: i32,
+    pub num_bites: i32,
 
     // declare locks that determine if a given philosopher can take a bite
     one_can_eat: Arc<(Mutex<bool>, Condvar)>,

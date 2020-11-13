@@ -130,12 +130,13 @@ Correct the `DiningPhilosophers` implementation to guarantee the same order of p
 # Solution
 
 In order to protect the threads and establish some sort of order give the `DiningPhilosophers` struct three new properties of type `Arc<Mutex<bool>, Condvar>`. Each of these properties represents a shared memory `Mutex` that can hold the boolean value specifying if a given philosopher can eat, as well as a Condvar to notify threads when the `Mutex` value has changed.
+- note: I made all of the new properties private by making only `num_bites` public, so none of these new values are public facing outside of the implementation.
 
 ```rust
 // 3 people sit down to eat form the same plate, make sure that they all get to eat in turn
 struct DiningPhilosophers {
     // declare the number of bites each philosopher will take
-    num_bites: i32,
+    pub num_bites: i32,
 
     // declare locks that determine if a given philosopher can take a bite
     one_can_eat: Arc<(Mutex<bool>, Condvar)>,
