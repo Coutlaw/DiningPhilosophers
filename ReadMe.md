@@ -43,6 +43,12 @@ impl DiningPeople {
 ```
 
 The `eat()` function is just a function to represent some delay for whomever is eating to eat their fry.
+```rust
+fn eat() {
+    let ten_millis = time::Duration::from_millis(10);
+    thread::sleep(ten_millis);
+}
+```
 
 Then there is some code using this struct and implementation representing the Philosophers eating together. 
  - Rust Note: We have to use closures (for spawning threads) and `Arc` to allow multiple non-mutable references to a heap allocation, both of these are because of how Rust handles ownership and concurrency.
